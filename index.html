@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Christmas Wish List 🎄</title>
+    <style>
+        :root {
+            --primary: #c41e3a; /* Christmas Red */
+            --secondary: #165b33; /* Christmas Green */
+            --accent: #f8b229; /* Gold */
+            --bg: #fdfbf7;
+            --card-bg: #ffffff;
+            --text: #2c2c2c;
+            --gray: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        main {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Login Screen */
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            text-align: center;
+            max-width: 450px;
+            margin: 3rem auto;
+            border-top: 6px solid var(--accent);
+        }
+
+        .login-card h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #a01830;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* App Dashboard */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .user-badge {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.4rem 1rem;
+            width: auto;
+            font-size: 0.85rem;
+        }
+
+        .logout-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray);
+        }
+
+        /* Wishlist Grid & Cards */
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .family-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .family-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .view-btn {
+            margin-top: 1rem;
+            background-color: var(--secondary);
+        }
+
+        .view-btn:hover {
+            background-color: #0f3d22;
+        }
+
+        /* Detail Modal / View */
+        .wishlist-view {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            width: auto;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .item-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .item-card {
+            background: #faf9f6;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-info h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .item-info p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .item-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .item-info a:hover {
+            text-decoration: underline;
+        }
+
+        .claim-btn {
+            width: auto;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            background-color: var(--secondary);
+            white-space: nowrap;
+        }
+
+        .claim-btn.claimed {
+            background-color: #6c757d;
+        }
+
+        .claim-btn.claimed:hover {
+            background-color: #5a6268;
+        }
+
+        /* Add Item Form */
+        .add-item-box {
+            background: #f4f6f3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border: 1px dashed var(--secondary);
+        }
+
+        .add-item-box h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .inline-inputs {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 0.75rem;
+        }
+
+        @media(max-width: 768px) {
+            .inline-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .delete-item {
+            background: #dc3545;
+            width: auto;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .delete-item:hover {
+            background: #bd2130;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎄 Family Christmas Wish List 🎁</h1>
+        <p>Coordinate gifts secretly and make the holidays special!</p>
+    </header>
+
+    <main>
+        <!-- LOGIN SCREEN -->
+        <section id="loginScreen" class="login-card">
+            <h2>Welcome Family!</h2>
+            <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #666;">Select your name below to view and manage wish lists.</p>
+            <div class="form-group">
+                <label for="userSelect">Who are you?</label>
+                <select id="userSelect">
+                    <option value="">-- Choose your name --</option>
+                </select>
+            </div>
+            <button onclick="login()">Enter Wish Lists</button>
+        </section>
+
+        <!-- DASHBOARD -->
+        <section id="dashboardScreen" class="hidden">
+            <div class="dashboard-header">
+                <div>
+                    <span style="font-size: 0.85rem; color: #666; display: block;">Logged in as:</span>
+                    <span class="user-badge" id="currentUserName"></span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Log Out</button>
+            </div>
+
+            <!-- My Wish List Section -->
+            <div class="wishlist-view" id="myListView">
+                <h3 class="section-title">✨ My Christmas Wish List</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Add items you'd love to receive. (Family members can see these to buy gifts, but they cannot see who claimed what!)</p>
+                
+                <ul class="item-list" id="myItemsList">
+                    <!-- Populated via JS -->
+                </ul>
+
+                <div class="add-item-box">
+                    <h4>Add a New Item to Your List</h4>
+                    <div class="inline-inputs">
+                        <input type="text" id="newItemTitle" placeholder="Gift Name (e.g., Coffee Mug)">
+                        <input type="text" id="newItemLink" placeholder="Store Link (Optional)">
+                        <input type="text" id="newItemNotes" placeholder="Notes (Size, Color, etc.)">
+                        <button onclick="addMyItem()">Add Item</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Family Members Lists Overview -->
+            <h3 class="section-title">🎁 Family Member Wish Lists</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Click on a family member to view their list and secretly claim gifts you want to buy them!</p>
+            
+            <div class="family-grid" id="familyGrid">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- VIEW SPECIFIC FAMILY MEMBER LIST -->
+        <section id="detailScreen" class="hidden">
+            <button class="back-btn" onclick="showDashboard()">← Back to Family Lists</button>
+            <div class="wishlist-view">
+                <h3 class="section-title" id="detailMemberTitle"></h3>
+                <ul class="item-list" id="detailItemsList">
+                    <!-- Populated via JS -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* 
+          ==================================================
+          JSON FAMILY DATA STRUCTURE
+          You can easily edit family members and items here, 
+          or leave it for them to add their own items!
+          ==================================================
+        */
+        let familyData = {
+            members: [
+                { id: "mom", name: "Mom", items: [
+                    { id: "m1", title: "Kindle Paperwhite", link: "https://amazon.com", notes: "Color: Black", claimedBy: null },
+                    { id: "m2", title: "Scented Candles", link: "", notes: "Vanilla or Lavender", claimedBy: null }
+                ]},
+                { id: "dad", name: "Dad", items: [
+                    { id: "d1", title: "Gourmet Coffee Beans", link: "", notes: "Dark roast", claimedBy: null },
+                    { id: "d2", title: "Golf Gloves (Size L)", link: "", notes: "FootJoy brand", claimedBy: null }
+                ]},
+                { id: "sarah", name: "Sarah", items: [
+                    { id: "s1", title: "Running Shoes (Size 8)", link: "", notes: "Nike or Brooks", claimedBy: null }
+                ]},
+                { id: "alex", name: "Alex", items: [
+                    { id: "a1", title: "Board Game: Catan", link: "", notes: "Base game", claimedBy: null }
+                ]}
+            ]
+        };
+
+        // Load saved data from browser storage if available, otherwise use initial data
+        let savedStorage = localStorage.getItem('family_christmas_data_2026');
+        if (savedStorage) {
+            try {
+                familyData = JSON.parse(savedStorage);
+            } catch (e) {
+                console.error("Could not parse saved data", e);
+            }
+        }
+
+        let currentUser = null;
+        let viewingMemberId = null;
+
+        // Initialize login dropdown
+        function initApp() {
+            const select = document.getElementById('userSelect');
+            select.innerHTML = '<option value="">-- Choose your name --</option>';
+            familyData.members.forEach(member => {
+                const opt = document.createElement('option');
+                opt.value = member.id;
+                opt.textContent = member.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('family_christmas_data_2026', JSON.stringify(familyData));
+        }
+
+        function login() {
+            const selectVal = document.getElementById('userSelect').value;
+            if (!selectVal) {
+                alert("Please select your name to log in.");
+                return;
+            }
+            currentUser = familyData.members.find(m => m.id === selectVal);
+            document.getElementById('currentUserName').textContent = currentUser.name;
+            
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboardScreen').classList.remove('hidden');
+            
+            renderDashboard();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('dashboardScreen').classList.add('hidden');
+            document.getElementById('detailScreen').classList.add('hidden');
+            document.getElementById('userSelect').value = "";
+        }
+
+        function renderDashboard() {
+            // Render My List
+            const myListContainer = document.getElementById('myItemsList');
+            myListContainer.innerHTML = '';
+            
+            if (currentUser.items.length === 0) {
+                myListContainer.innerHTML = '<p style="color: #777; font-style: italic; padding: 0.5rem 0;">Your wish list is currently empty. Add items below!</p>';
+            } else {
+                currentUser.items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'item-card';
+                    li.innerHTML = `
+                        <div class="item-info">
+                            <h4>${escapeHtml(item.title)}</h4>
+                            ${item.notes ? `<p>Notes: ${escapeHtml(item.notes)}</p>` : ''}
+                            ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank">🔗 View Product Link</a>` : ''}
+                        </div>
+                        <button class="delete-item" onclick="deleteMyItem('${item.id}')">Delete</button>
+                    `;
+                    myListContainer.appendChild(li);
+                });
+            }
+
+            // Render Family Grid (Everyone except current user)
+            const grid = document.getElementById('familyGrid');
+            grid.innerHTML = '';
+            
+            familyData.members.forEach(member => {
+                if (member.id === currentUser.id) return; // Skip yourself
+
+                const card = document.createElement('div');
+                card.className = 'family-card';
+                card.innerHTML = `
+                    <div>
+                        <h3>🎄 ${escapeHtml(member.name)}'s Wish List</h3>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">${member.items.length} item(s) listed</p>
+                    </div>
+                    <button class="view-btn" onclick="viewFamilyMember('${member.id}')">View List & Buy Gifts</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addMyItem() {
+            const titleInput = document.getElementById('newItemTitle');
+            const linkInput = document.getElementById('newItemLink');
+            const notesInput = document.getElementById('newItemNotes');
+
+            const title = titleInput.value.trim();
+            if (!title) {
+                alert("Please enter a gift title.");
+                return;
+            }
+
+            const newItem = {
+                id: 'item_' + Date.now(),
+                title: title,
+                link: linkInput.value.trim(),
+                notes: notesInput.value.trim(),
+                claimedBy: null
+            };
+
+            currentUser.items.push(newItem);
+            
+            // Update in main array
+            const memberIndex = familyData.members.findIndex(m => m.id === currentUser.id);
+            familyData.members[memberIndex] = currentUser;
+
+            saveData();
+            renderDashboard();
+
+            // Clear inputs
+            titleInput.value = '';
+            linkInput.value = '';
+            notesInput.value = '';
+        }
+
+        function deleteMyItem(itemId) {
+            if (!confirm("Are you sure you want to remove this item from your wish list?")) return;
+
+            currentUser.items = currentUser.items.filter(i => i.id !== itemId);
+            
+            const memberIndex = familyData.members.findIndex(m => m.id === currentUser.id);
+            familyData.members[memberIndex] = currentUser;
+
+            saveData();
+            renderDashboard();
+        }
+
+        function viewFamilyMember(memberId) {
+            viewingMemberId = memberId;
+            const member = familyData.members.find(m => m.id === memberId);
+
+            document.getElementById('dashboardScreen').classList.add('hidden');
+            document.getElementById('detailScreen').classList.remove('hidden');
+            document.getElementById('detailMemberTitle').textContent = `${member.name}'s Christmas Wish List`;
+
+            renderDetailList();
+        }
+
+        function renderDetailList() {
+            const member = familyData.members.find(m => m.id === viewingMemberId);
+            const container = document.getElementById('detailItemsList');
+            container.innerHTML = '';
+
+            if (member.items.length === 0) {
+                container.innerHTML = '<p style="color: #777; font-style: italic;">This family member hasn\'t added any items to their wish list yet.</p>';
+                return;
+            }
+
+            member.items.forEach(item => {
+                const isClaimedByMe = item.claimedBy === currentUser.id;
+                const isClaimedBySomeoneElse = item.claimedBy && !isClaimedByMe;
+
+                let btnText = "Claim Gift 🎁";
+                let btnClass = "claim-btn";
+                let statusBadge = "";
+
+                if (isClaimedByMe) {
+                    btnText = "Unclaim (You got this)";
+                    btnClass = "claim-btn claimed";
+                    statusBadge = `<p style="color: var(--secondary); font-weight: bold; margin-top: 0.25rem;">✓ You have claimed this gift!</p>`;
+                } else if (isClaimedBySomeoneElse) {
+                    btnText = "Claimed by someone else";
+                    btnClass = "claim-btn claimed";
+                    btnClass += " disabled";
+                    statusBadge = `<p style="color: #888; font-style: italic; margin-top: 0.25rem;">🔒 Claimed by another family member</p>`;
+                }
+
+                const li = document.createElement('li');
+                li.className = 'item-card';
+                li.innerHTML = `
+                    <div class="item-info">
+                        <h4>${escapeHtml(item.title)}</h4>
+                        ${item.notes ? `<p>Notes: ${escapeHtml(item.notes)}</p>` : ''}
+                        ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank">🔗 View Product Link</a>` : ''}
+                        ${statusBadge}
+                    </div>
+                    <div>
+                        ${!isClaimedBySomeoneElse ? `<button class="${btnClass}" onclick="toggleClaim('${item.id}')">${btnText}</button>` : `<button class="claim-btn claimed" disabled>Claimed</button>`}
+                    </div>
+                `;
+                container.appendChild(li);
+            });
+        }
+
+        function toggleClaim(itemId) {
+            const member = familyData.members.find(m => m.id === viewingMemberId);
+            const item = member.items.find(i => i.id === itemId);
+
+            if (item.claimedBy === currentUser.id) {
+                // Unclaim
+                item.claimedBy = null;
+            } else if (!item.claimedBy) {
+                // Claim
+                item.claimedBy = currentUser.id;
+            }
+
+            saveData();
+            renderDetailList();
+        }
+
+        function showDashboard() {
+            document.getElementById('detailScreen').classList.add('hidden');
+            document.getElementById('dashboardScreen').classList.remove('hidden');
+            renderDashboard();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Run setup on load
+        initApp();
+    </script>
+</body>
+</html>
