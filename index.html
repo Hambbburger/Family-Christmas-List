@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Holiday Wishlist 🎄</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -79,91 +80,74 @@
             padding: 0 1.5rem;
         }
 
-        /* Banner Card */
-        .welcome-banner {
-            background: linear-gradient(135deg, #166534, #064e3b);
-            border: 1px solid #22c55e44;
+        /* Login Card */
+        .login-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            padding: 3rem 2.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             text-align: center;
+            max-width: 480px;
+            margin: 4rem auto;
+            border-top: 6px solid var(--accent-gold);
         }
 
-        .welcome-banner h2 {
+        .login-card h2 {
             font-family: 'Mountains of Christmas', cursive;
-            font-size: 2.2rem;
-            color: #fef08a;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-banner p {
-            color: #d1fae5;
-            font-size: 0.95rem;
-        }
-
-        /* Profile Selection Grid */
-        .profiles-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .profiles-container h3 {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: var(--accent-gold);
             margin-bottom: 0.5rem;
         }
 
-        .profiles-container p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+        .form-group {
+            margin: 1.5rem 0;
+            text-align: left;
         }
 
-        .profile-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .profile-card {
-            background: var(--card-dark);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .profile-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-gold);
-            background: var(--card-hover);
-        }
-
-        .profile-avatar {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .profile-card h4 {
-            font-size: 1.25rem;
+        label {
+            display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
             color: var(--text-light);
         }
 
-        .item-badge {
+        select {
+            width: 100%;
+            padding: 0.85rem;
             background: var(--bg-dark);
-            color: var(--text-muted);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid var(--border-color);
-            display: inline-block;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .action-btn {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
         }
 
         /* Dashboard & Views */
@@ -182,22 +166,6 @@
             font-weight: bold;
             color: var(--accent-gold);
             font-size: 1.1rem;
-        }
-
-        .action-btn {
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .action-btn:hover {
-            opacity: 0.9;
         }
 
         .logout-btn {
@@ -222,6 +190,25 @@
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .profile-card {
+            background: var(--card-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .wishlist-view {
@@ -377,7 +364,7 @@
 
     <header>
         <div class="brand">
-            <div class="brand-icon">🎁</div>
+            <div class="brand-icon">🎄</div>
             <div>
                 <h1>Family Holiday Wishlist</h1>
                 <p>JSON-Backed & Secret Santa Safe</p>
@@ -391,18 +378,17 @@
             Loading family wish lists from the cloud... 🎄
         </div>
 
-        <!-- LOGIN / PROFILE SELECTION SCREEN -->
-        <section id="loginScreen" class="hidden">
-            <div class="welcome-banner">
-                <h2>🎄 Who is logging in?</h2>
-                <p>Select your family profile card below to view wish lists and coordinate gifts instantly!</p>
+        <!-- LOGIN SCREEN WITH DROPDOWN -->
+        <section id="loginScreen" class="login-card hidden">
+            <h2>Welcome Family!</h2>
+            <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">Select your name from the list below to enter.</p>
+            <div class="form-group">
+                <label for="userSelect">Who are you?</label>
+                <select id="userSelect">
+                    <option value="">-- Choose your name --</option>
+                </select>
             </div>
-
-            <div class="profiles-container">
-                <h3>Select Your Family Member Profile</h3>
-                <p>Tap your name below to sign in instantly. No passwords or registration required!</p>
-                <div class="profile-grid" id="profileGrid"></div>
-            </div>
+            <button class="action-btn" onclick="login()">Enter Wish Lists</button>
         </section>
 
         <!-- DASHBOARD -->
@@ -437,7 +423,7 @@
             <h3 class="section-title">🎁 Family Member Wish Lists</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Click on a family member to view their list and secretly claim gifts you want to buy them!</p>
             
-            <div class="profile-grid" id="familyGrid"></div>
+            <div class="family-grid" id="familyGrid"></div>
         </section>
 
         <!-- VIEW SPECIFIC FAMILY MEMBER LIST -->
@@ -472,14 +458,13 @@
 
     <script>
         // YOUR CLOUD JSONBIN CREDENTIALS:
-        const BIN_ID = "6aea11bfffd5d16053a31c3f";
+        const BIN_ID = "6aea0ec1ac6210605a695fdf";
         const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe"; // Keep your master key here
 
         let familyData = { members: [] };
         let currentUser = null;
         let viewingMemberId = null;
 
-        // Emoji avatars matching each family member name
         function getAvatar(name) {
             const n = name.toLowerCase();
             if (n.includes('mom') || n.includes('paggie')) return '👩';
@@ -502,7 +487,7 @@
 
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('loginScreen').classList.remove('hidden');
-                renderProfiles();
+                initApp();
             } catch (error) {
                 console.error("Error loading data:", error);
                 alert("Could not load wish lists from cloud. Please check your Bin ID and Master Key.");
@@ -525,25 +510,24 @@
             }
         }
 
-        function renderProfiles() {
-            const grid = document.getElementById('profileGrid');
-            grid.innerHTML = '';
+        function initApp() {
+            const select = document.getElementById('userSelect');
+            select.innerHTML = '<option value="">-- Choose your name --</option>';
             familyData.members.forEach(member => {
-                const totalItems = member.items.length + (member.extraGifts ? member.extraGifts.length : 0);
-                const card = document.createElement('div');
-                card.className = 'profile-card';
-                card.onclick = () => loginAs(member.id);
-                card.innerHTML = `
-                    <div class="profile-avatar">${getAvatar(member.name)}</div>
-                    <h4>${escapeHtml(member.name)}</h4>
-                    <span class="item-badge">${totalItems} wishlist item${totalItems === 1 ? '' : 's'}</span>
-                `;
-                grid.appendChild(card);
+                const opt = document.createElement('option');
+                opt.value = member.id;
+                opt.textContent = member.name;
+                select.appendChild(opt);
             });
         }
 
-        async function loginAs(memberId) {
-            currentUser = familyData.members.find(m => m.id === memberId);
+        async function login() {
+            const selectVal = document.getElementById('userSelect').value;
+            if (!selectVal) {
+                alert("Please select your name to log in.");
+                return;
+            }
+            currentUser = familyData.members.find(m => m.id === selectVal);
             document.getElementById('currentUserName').textContent = currentUser.name;
             
             document.getElementById('loginScreen').classList.add('hidden');
@@ -554,9 +538,10 @@
 
         function logout() {
             currentUser = null;
-            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboardScreen').classList.add('hidden');
             document.getElementById('detailScreen').classList.add('hidden');
+            document.getElementById('userSelect').value = "";
             fetchCloudData();
         }
 
@@ -594,18 +579,13 @@
                 const totalItems = member.items.length + (member.extraGifts ? member.extraGifts.length : 0);
                 const card = document.createElement('div');
                 card.className = 'profile-card';
-                card.style.textAlign = 'left';
-                card.style.display = 'flex';
-                card.style.flexDirection = 'column';
-                card.style.justifyContent = 'space-between';
-                card.onclick = () => viewFamilyMember(member.id);
                 card.innerHTML = `
                     <div>
-                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${getAvatar(member.name)}</div>
-                        <h4 style="font-size: 1.2rem; margin-bottom: 0.2rem;">${escapeHtml(member.name)}'s Wishlist</h4>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">${totalItems} item(s) listed</p>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">${getAvatar(member.name)}</div>
+                        <h4 style="font-size: 1.15rem; margin-bottom: 0.2rem; color: var(--text-light);">${escapeHtml(member.name)}'s Wishlist</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${totalItems} item(s) listed</p>
                     </div>
-                    <button class="action-btn" style="margin-top: 1.2rem; width: 100%;">View List & Buy Gifts</button>
+                    <button class="action-btn" onclick="viewFamilyMember('${member.id}')">View List & Buy Gifts</button>
                 `;
                 grid.appendChild(card);
             });
