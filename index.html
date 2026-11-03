@@ -6,9 +6,9 @@
     <title>Family Christmas Wish List 🎄</title>
     <style>
         :root {
-            --primary: #c41e3a; /* Christmas Red */
-            --secondary: #165b33; /* Christmas Green */
-            --accent: #f8b229; /* Gold */
+            --primary: #c41e3a;
+            --secondary: #165b33;
+            --accent: #f8b229;
             --bg: #fdfbf7;
             --card-bg: #ffffff;
             --text: #2c2c2c;
@@ -56,7 +56,6 @@
             padding: 0 1rem;
         }
 
-        /* Login Screen */
         .login-card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -120,7 +119,6 @@
             transform: scale(0.98);
         }
 
-        /* App Dashboard */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -160,7 +158,6 @@
             border-bottom: 2px solid var(--gray);
         }
 
-        /* Wishlist Grid & Cards */
         .family-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -179,11 +176,6 @@
             border-left: 5px solid var(--secondary);
         }
 
-        .family-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
         .view-btn {
             margin-top: 1rem;
             background-color: var(--secondary);
@@ -193,7 +185,6 @@
             background-color: #0f3d22;
         }
 
-        /* Detail Modal / View */
         .wishlist-view {
             background: var(--card-bg);
             border-radius: 12px;
@@ -264,11 +255,6 @@
             background-color: #6c757d;
         }
 
-        .claim-btn.claimed:hover {
-            background-color: #5a6268;
-        }
-
-        /* Add Item Form */
         .add-item-box {
             background: #f4f6f3;
             padding: 1.5rem;
@@ -305,6 +291,13 @@
             background: #bd2130;
         }
 
+        .loading-overlay {
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
+            color: #666;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -318,8 +311,13 @@
     </header>
 
     <main>
+        <!-- LOADING SCREEN -->
+        <div id="loadingScreen" class="loading-overlay">
+            Loading family wish lists from the cloud... 🎄
+        </div>
+
         <!-- LOGIN SCREEN -->
-        <section id="loginScreen" class="login-card">
+        <section id="loginScreen" class="login-card hidden">
             <h2>Welcome Family!</h2>
             <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #666;">Select your name below to view and manage wish lists.</p>
             <div class="form-group">
@@ -344,11 +342,9 @@
             <!-- My Wish List Section -->
             <div class="wishlist-view" id="myListView">
                 <h3 class="section-title">✨ My Christmas Wish List</h3>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Add items you'd love to receive. (Family members can see these to buy gifts, but they cannot see who claimed what!)</p>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Add items you'd love to receive.</p>
                 
-                <ul class="item-list" id="myItemsList">
-                    <!-- Populated via JS -->
-                </ul>
+                <ul class="item-list" id="myItemsList"></ul>
 
                 <div class="add-item-box">
                     <h4>Add a New Item to Your List</h4>
@@ -361,13 +357,11 @@
                 </div>
             </div>
 
-            <!-- Other Family Members Lists Overview -->
+            <!-- Family Members Lists Overview -->
             <h3 class="section-title">🎁 Family Member Wish Lists</h3>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Click on a family member to view their list and secretly claim gifts you want to buy them!</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">Click on a family member to view their list and secretly claim gifts!</p>
             
-            <div class="family-grid" id="familyGrid">
-                <!-- Populated via JS -->
-            </div>
+            <div class="family-grid" id="familyGrid"></div>
         </section>
 
         <!-- VIEW SPECIFIC FAMILY MEMBER LIST -->
@@ -375,54 +369,55 @@
             <button class="back-btn" onclick="showDashboard()">← Back to Family Lists</button>
             <div class="wishlist-view">
                 <h3 class="section-title" id="detailMemberTitle"></h3>
-                <ul class="item-list" id="detailItemsList">
-                    <!-- Populated via JS -->
-                </ul>
+                <ul class="item-list" id="detailItemsList"></ul>
             </div>
         </section>
     </main>
 
     <script>
-        /* 
-          ==================================================
-          JSON FAMILY DATA STRUCTURE
-          You can easily edit family members and items here, 
-          or leave it for them to add their own items!
-          ==================================================
-        */
-        let familyData = {
-            members: [
-                { id: "mom", name: "Mom", items: [
-                    { id: "m1", title: "Kindle Paperwhite", link: "https://amazon.com", notes: "Color: Black", claimedBy: null },
-                    { id: "m2", title: "Scented Candles", link: "", notes: "Vanilla or Lavender", claimedBy: null }
-                ]},
-                { id: "dad", name: "Dad", items: [
-                    { id: "d1", title: "Gourmet Coffee Beans", link: "", notes: "Dark roast", claimedBy: null },
-                    { id: "d2", title: "Golf Gloves (Size L)", link: "", notes: "FootJoy brand", claimedBy: null }
-                ]},
-                { id: "sarah", name: "Sarah", items: [
-                    { id: "s1", title: "Running Shoes (Size 8)", link: "", notes: "Nike or Brooks", claimedBy: null }
-                ]},
-                { id: "alex", name: "Alex", items: [
-                    { id: "a1", title: "Board Game: Catan", link: "", notes: "Base game", claimedBy: null }
-                ]}
-            ]
-        };
+        // REPLACE THESE TWO STRINGS WITH YOUR JSONBIN DETAILS:
+        const BIN_ID = "6aea0ec1ac6210605a695fdf";
+        const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe";
 
-        // Load saved data from browser storage if available, otherwise use initial data
-        let savedStorage = localStorage.getItem('family_christmas_data_2026');
-        if (savedStorage) {
-            try {
-                familyData = JSON.parse(savedStorage);
-            } catch (e) {
-                console.error("Could not parse saved data", e);
-            }
-        }
-
+        let familyData = { members: [] };
         let currentUser = null;
         let viewingMemberId = null;
 
-        // Initialize login dropdown
+        // Fetch latest data from JSONbin on startup
+        async function fetchCloudData() {
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: { 'X-Master-Key': MASTER_KEY }
+                });
+                const data = await response.json();
+                familyData = data.record;
+                
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('loginScreen').classList.remove('hidden');
+                initApp();
+            } catch (error) {
+                console.error("Error loading data:", error);
+                alert("Could not load wish lists from cloud. Please check your Bin ID and Master Key.");
+            }
+        }
+
+        // Save latest data to JSONbin
+        async function saveCloudData() {
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify(familyData)
+                });
+            } catch (error) {
+                console.error("Error saving data:", error);
+                alert("Failed to sync changes to the cloud.");
+            }
+        }
+
         function initApp() {
             const select = document.getElementById('userSelect');
             select.innerHTML = '<option value="">-- Choose your name --</option>';
@@ -434,11 +429,7 @@
             });
         }
 
-        function saveData() {
-            localStorage.setItem('family_christmas_data_2026', JSON.stringify(familyData));
-        }
-
-        function login() {
+        async function login() {
             const selectVal = document.getElementById('userSelect').value;
             if (!selectVal) {
                 alert("Please select your name to log in.");
@@ -459,10 +450,13 @@
             document.getElementById('dashboardScreen').classList.add('hidden');
             document.getElementById('detailScreen').classList.add('hidden');
             document.getElementById('userSelect').value = "";
+            fetchCloudData(); // Refresh data on logout
         }
 
         function renderDashboard() {
-            // Render My List
+            const memberObj = familyData.members.find(m => m.id === currentUser.id);
+            currentUser = memberObj; // Keep reference fresh
+
             const myListContainer = document.getElementById('myItemsList');
             myListContainer.innerHTML = '';
             
@@ -484,12 +478,11 @@
                 });
             }
 
-            // Render Family Grid (Everyone except current user)
             const grid = document.getElementById('familyGrid');
             grid.innerHTML = '';
             
             familyData.members.forEach(member => {
-                if (member.id === currentUser.id) return; // Skip yourself
+                if (member.id === currentUser.id) return;
 
                 const card = document.createElement('div');
                 card.className = 'family-card';
@@ -504,7 +497,7 @@
             });
         }
 
-        function addMyItem() {
+        async function addMyItem() {
             const titleInput = document.getElementById('newItemTitle');
             const linkInput = document.getElementById('newItemLink');
             const notesInput = document.getElementById('newItemNotes');
@@ -525,32 +518,37 @@
 
             currentUser.items.push(newItem);
             
-            // Update in main array
             const memberIndex = familyData.members.findIndex(m => m.id === currentUser.id);
             familyData.members[memberIndex] = currentUser;
 
-            saveData();
+            await saveCloudData();
             renderDashboard();
 
-            // Clear inputs
             titleInput.value = '';
             linkInput.value = '';
             notesInput.value = '';
         }
 
-        function deleteMyItem(itemId) {
-            if (!confirm("Are you sure you want to remove this item from your wish list?")) return;
+        async function deleteMyItem(itemId) {
+            if (!confirm("Are you sure you want to remove this item?")) return;
 
             currentUser.items = currentUser.items.filter(i => i.id !== itemId);
             
             const memberIndex = familyData.members.findIndex(m => m.id === currentUser.id);
             familyData.members[memberIndex] = currentUser;
 
-            saveData();
+            await saveCloudData();
             renderDashboard();
         }
 
-        function viewFamilyMember(memberId) {
+        async function viewFamilyMember(memberId) {
+            // Fetch latest before viewing to ensure claim statuses are up to date
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { 'X-Master-Key': MASTER_KEY }
+            });
+            const data = await response.json();
+            familyData = data.record;
+
             viewingMemberId = memberId;
             const member = familyData.members.find(m => m.id === memberId);
 
@@ -567,7 +565,7 @@
             container.innerHTML = '';
 
             if (member.items.length === 0) {
-                container.innerHTML = '<p style="color: #777; font-style: italic;">This family member hasn\'t added any items to their wish list yet.</p>';
+                container.innerHTML = '<p style="color: #777; font-style: italic;">This family member hasn\'t added any items yet.</p>';
                 return;
             }
 
@@ -586,7 +584,6 @@
                 } else if (isClaimedBySomeoneElse) {
                     btnText = "Claimed by someone else";
                     btnClass = "claim-btn claimed";
-                    btnClass += " disabled";
                     statusBadge = `<p style="color: #888; font-style: italic; margin-top: 0.25rem;">🔒 Claimed by another family member</p>`;
                 }
 
@@ -607,23 +604,28 @@
             });
         }
 
-        function toggleClaim(itemId) {
+        async function toggleClaim(itemId) {
             const member = familyData.members.find(m => m.id === viewingMemberId);
             const item = member.items.find(i => i.id === itemId);
 
             if (item.claimedBy === currentUser.id) {
-                // Unclaim
                 item.claimedBy = null;
             } else if (!item.claimedBy) {
-                // Claim
                 item.claimedBy = currentUser.id;
             }
 
-            saveData();
+            await saveCloudData();
             renderDetailList();
         }
 
-        function showDashboard() {
+        async function showDashboard() {
+            // Refresh data when going back to dashboard
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { 'X-Master-Key': MASTER_KEY }
+            });
+            const data = await response.json();
+            familyData = data.record;
+
             document.getElementById('detailScreen').classList.add('hidden');
             document.getElementById('dashboardScreen').classList.remove('hidden');
             renderDashboard();
@@ -634,8 +636,8 @@
             return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        // Run setup on load
-        initApp();
+        // Initialize app on load
+        fetchCloudData();
     </script>
 </body>
 </html>
