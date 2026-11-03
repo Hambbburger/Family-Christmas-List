@@ -275,6 +275,11 @@
             text-decoration: underline;
         }
 
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
         .claim-btn {
             background-color: var(--secondary-green);
             color: white;
@@ -332,6 +337,20 @@
 
         input:focus {
             border-color: var(--accent-gold);
+        }
+
+        .edit-item {
+            background: #d97706;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .edit-item:hover {
+            background: #b45309;
         }
 
         .delete-item {
@@ -458,8 +477,8 @@
 
     <script>
         // YOUR CLOUD JSONBIN CREDENTIALS:
-        const BIN_ID = "6aea11bfffd5d16053a31c3f";
-        const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe"; // Keep your master key here
+        const BIN_ID = "6aea0ec1ac6210605a695fdf";
+        const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe"; // <-- Ensure your real Master Key is here
 
         let familyData = { members: [] };
         let currentUser = null;
@@ -564,7 +583,10 @@
                             ${item.notes ? `<p>Notes: ${escapeHtml(item.notes)}</p>` : ''}
                             ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank">🔗 View Product Link</a>` : ''}
                         </div>
-                        <button class="delete-item" onclick="deleteMyItem('${item.id}')">Delete</button>
+                        <div class="item-actions">
+                            <button class="edit-item" onclick="editMyItem('${item.id}')">Edit</button>
+                            <button class="delete-item" onclick="deleteMyItem('${item.id}')">Delete</button>
+                        </div>
                     `;
                     myListContainer.appendChild(li);
                 });
@@ -621,6 +643,31 @@
             titleInput.value = '';
             linkInput.value = '';
             notesInput.value = '';
+        }
+
+        async function editMyItem(itemId) {
+            const item = currentUser.items.find(i => i.id === itemId);
+            if (!item) return;
+
+            const newTitle = prompt("Edit gift name:", item.title);
+            if (newTitle === null) return; // User cancelled
+            if (!newTitle.trim()) {
+                alert("Gift name cannot be empty.");
+                return;
+            }
+
+            const newLink = prompt("Edit store link (optional):", item.link || "");
+            const newNotes = prompt("Edit notes (size, color, etc.):", item.notes || "");
+
+            item.title = newTitle.trim();
+            item.link = newLink ? newLink.trim() : "";
+            item.notes = newNotes ? newNotes.trim() : "";
+
+            const memberIndex = familyData.members.findIndex(m => m.id === currentUser.id);
+            familyData.members[memberIndex] = currentUser;
+
+            await saveCloudData();
+            renderDashboard();
         }
 
         async function deleteMyItem(itemId) {
