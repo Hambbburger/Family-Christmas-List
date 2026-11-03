@@ -377,6 +377,105 @@
         .hidden {
             display: none !important;
         }
+
+        body {
+            /* Magical starry night / Great Hall atmosphere */
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.95)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border-bottom: 2px solid #b45309;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        /* Magical Parchment & Glow Cards */
+        .login-card, .wishlist-view, .dashboard-header, .profile-card, .item-card {
+            background: rgba(30, 41, 59, 0.85) !important;
+            backdrop-filter: blur(8px);
+            border: 2px solid #d97706 !important;
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.2), inset 0 0 15px rgba(0,0,0,0.5) !important;
+            color: #f8fafc !important;
+        }
+
+        .login-card {
+            max-width: 480px;
+            margin: 4rem auto;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+        }
+
+        .login-card h2, .welcome-banner h2 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2.5rem;
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+        }
+
+        .section-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #b45309;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+        }
+
+        select, input {
+            background: rgba(15, 23, 42, 0.9) !important;
+            border: 2px solid #b45309 !important;
+            color: #f8fafc !important;
+        }
+
+        select:focus, input:focus {
+            border-color: #fbbf24 !important;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+            border: 1px solid #f87171;
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
+        }
+
+        .edit-item {
+            background: #d97706;
+            color: white;
+            border: 1px solid #fbbf24;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
+        }
+
+        .delete-item {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border: 1px solid #991b1b;
+        }
+
+        .claim-btn {
+            background-color: #047857;
+            border: 1px solid #34d399;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4);
+        }
+
+        .claim-btn.claimed {
+            background-color: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
+        }
     </style>
 </head>
 <body>
