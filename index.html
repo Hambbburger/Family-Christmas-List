@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-dark: #1e293b;
+            --bg-dark: #0b0f19;
+            --card-dark: rgba(30, 41, 59, 0.85);
             --card-hover: #334155;
-            --accent-gold: #f59e0b;
-            --primary-red: #ef4444;
-            --secondary-green: #10b981;
+            --accent-gold: #fbbf24;
+            --primary-red: #b91c1c;
+            --secondary-green: #047857;
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #334155;
+            --border-color: #d97706;
         }
 
         * {
@@ -26,21 +26,27 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* Magical Starry Night / Hogwarts Background */
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.95)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f1f5f9;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border-bottom: 2px solid #b45309;
             padding: 1.5rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
         .brand {
@@ -65,6 +71,7 @@
             font-size: 2.5rem;
             color: var(--accent-gold);
             letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
         }
 
         header p {
@@ -80,17 +87,23 @@
             padding: 0 1.5rem;
         }
 
-        /* Login Card */
+        /* Magical Parchment & Glow Cards */
+        .login-card, .wishlist-view, .dashboard-header, .profile-card, .item-card {
+            background: var(--card-dark) !important;
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--border-color) !important;
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.2), inset 0 0 15px rgba(0,0,0,0.5) !important;
+            color: #f8fafc !important;
+        }
+
+        /* Login Card Specifics */
         .login-card {
-            background: var(--card-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            text-align: center;
             max-width: 480px;
             margin: 4rem auto;
-            border-top: 6px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            border-top: 6px solid var(--accent-gold) !important;
         }
 
         .login-card h2 {
@@ -98,6 +111,7 @@
             font-size: 2.5rem;
             color: var(--accent-gold);
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
         }
 
         .form-group {
@@ -113,32 +127,34 @@
             color: var(--text-light);
         }
 
-        select {
+        select, input {
             width: 100%;
             padding: 0.85rem;
-            background: var(--bg-dark);
-            border: 2px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.9) !important;
+            border: 2px solid #b45309 !important;
             border-radius: 8px;
-            color: var(--text-light);
+            color: var(--text-light) !important;
             font-size: 1rem;
             outline: none;
             transition: border-color 0.2s;
         }
 
-        select:focus {
-            border-color: var(--accent-gold);
+        select:focus, input:focus {
+            border-color: var(--accent-gold) !important;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
         }
 
         .action-btn {
-            background-color: var(--primary-red);
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
             color: white;
-            border: none;
+            border: 1px solid #f87171;
             padding: 0.85rem 1.5rem;
             font-size: 1rem;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
             transition: opacity 0.2s, transform 0.1s;
         }
 
@@ -155,10 +171,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--card-dark);
             padding: 1rem 1.5rem;
             border-radius: 12px;
-            border: 1px solid var(--border-color);
             margin-bottom: 2rem;
         }
 
@@ -171,7 +185,7 @@
         .logout-btn {
             background: transparent;
             color: var(--text-muted);
-            border: 1px solid var(--border-color);
+            border: 1px solid #b45309;
             padding: 0.4rem 1rem;
             font-size: 0.85rem;
             border-radius: 6px;
@@ -189,7 +203,8 @@
             color: var(--accent-gold);
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #b45309;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
         }
 
         .family-grid {
@@ -200,30 +215,24 @@
         }
 
         .profile-card {
-            background: var(--card-dark);
-            border: 2px solid var(--border-color);
             border-radius: 16px;
             padding: 1.5rem;
             text-align: left;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .wishlist-view {
-            background: var(--card-dark);
-            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
             margin-bottom: 2.5rem;
         }
 
         .back-btn {
             background: var(--card-hover);
             color: var(--text-light);
-            border: 1px solid var(--border-color);
+            border: 1px solid #b45309;
             width: auto;
             margin-bottom: 1.5rem;
             padding: 0.5rem 1rem;
@@ -242,8 +251,6 @@
         }
 
         .item-card {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 1.25rem;
             margin-bottom: 1rem;
@@ -283,27 +290,28 @@
         .claim-btn {
             background-color: var(--secondary-green);
             color: white;
-            border: none;
+            border: 1px solid #34d399;
             padding: 0.5rem 1rem;
             font-size: 0.85rem;
             font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
             white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4);
         }
 
         .claim-btn.claimed {
-            background-color: var(--card-hover);
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
+            background-color: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
         }
 
         .add-item-box {
-            background: var(--bg-dark);
+            background: rgba(15, 23, 42, 0.6);
             padding: 1.5rem;
             border-radius: 12px;
             margin-top: 1.5rem;
-            border: 1px dashed var(--border-color);
+            border: 1px dashed #b45309;
         }
 
         .add-item-box h4 {
@@ -324,29 +332,15 @@
             }
         }
 
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--card-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: var(--accent-gold);
-        }
-
         .edit-item {
             background: #d97706;
             color: white;
-            border: none;
+            border: 1px solid #fbbf24;
             padding: 0.4rem 0.8rem;
             font-size: 0.8rem;
             border-radius: 6px;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
         }
 
         .edit-item:hover {
@@ -376,105 +370,6 @@
 
         .hidden {
             display: none !important;
-        }
-
-        body {
-            /* Magical starry night / Great Hall atmosphere */
-            background-color: #0b0f19;
-            background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.95)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #f1f5f9;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-            border-bottom: 2px solid #b45309;
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-        }
-
-        /* Magical Parchment & Glow Cards */
-        .login-card, .wishlist-view, .dashboard-header, .profile-card, .item-card {
-            background: rgba(30, 41, 59, 0.85) !important;
-            backdrop-filter: blur(8px);
-            border: 2px solid #d97706 !important;
-            box-shadow: 0 0 15px rgba(217, 119, 6, 0.2), inset 0 0 15px rgba(0,0,0,0.5) !important;
-            color: #f8fafc !important;
-        }
-
-        .login-card {
-            max-width: 480px;
-            margin: 4rem auto;
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
-            text-align: center;
-        }
-
-        .login-card h2, .welcome-banner h2 {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 2.5rem;
-            color: #fbbf24;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
-        }
-
-        .section-title {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 1.8rem;
-            color: #fbbf24;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #b45309;
-            text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
-        }
-
-        select, input {
-            background: rgba(15, 23, 42, 0.9) !important;
-            border: 2px solid #b45309 !important;
-            color: #f8fafc !important;
-        }
-
-        select:focus, input:focus {
-            border-color: #fbbf24 !important;
-            box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, #b91c1c, #991b1b);
-            border: 1px solid #f87171;
-            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
-        }
-
-        .edit-item {
-            background: #d97706;
-            color: white;
-            border: 1px solid #fbbf24;
-            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
-        }
-
-        .delete-item {
-            background: #7f1d1d;
-            color: #fca5a5;
-            border: 1px solid #991b1b;
-        }
-
-        .claim-btn {
-            background-color: #047857;
-            border: 1px solid #34d399;
-            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4);
-        }
-
-        .claim-btn.claimed {
-            background-color: #334155;
-            color: #94a3b8;
-            border: 1px solid #475569;
         }
     </style>
 </head>
@@ -577,7 +472,7 @@
     <script>
         // YOUR CLOUD JSONBIN CREDENTIALS:
         const BIN_ID = "6aea11bfffd5d16053a31c3f";
-        const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe"; // <-- Ensure your real Master Key is here
+        const MASTER_KEY = "$2a$10$EsOOF/eA.MdHt4km8lfXR.Z66fiooSBZ9nNHtdFVrw3NFekMvTnhe";
 
         let familyData = { members: [] };
         let currentUser = null;
@@ -749,7 +644,7 @@
             if (!item) return;
 
             const newTitle = prompt("Edit gift name:", item.title);
-            if (newTitle === null) return; // User cancelled
+            if (newTitle === null) return;
             if (!newTitle.trim()) {
                 alert("Gift name cannot be empty.");
                 return;
@@ -805,7 +700,6 @@
         function renderDetailList() {
             const member = familyData.members.find(m => m.id === viewingMemberId);
             
-            // 1. Render Official List
             const container = document.getElementById('detailItemsList');
             container.innerHTML = '';
 
@@ -823,7 +717,7 @@
                     if (isClaimedByMe) {
                         btnText = "Unclaim (You got this)";
                         btnClass = "claim-btn claimed";
-                        statusBadge = `<p style="color: var(--secondary-green); font-weight: 600; margin-top: 0.25rem;">✓ You have claimed this gift!</p>`;
+                        statusBadge = `<p style="color: #34d399; font-weight: 600; margin-top: 0.25rem;">✓ You have claimed this gift!</p>`;
                     } else if (isClaimedBySomeoneElse) {
                         btnText = "Claimed";
                         btnClass = "claim-btn claimed";
@@ -847,7 +741,6 @@
                 });
             }
 
-            // 2. Render Extra Gifts List
             const extraContainer = document.getElementById('extraItemsList');
             extraContainer.innerHTML = '';
 
